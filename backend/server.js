@@ -47,8 +47,8 @@ app.use(express.static(frontendDist));
 app.use('/auth', authRoutes);
 app.use('/tasks', taskRoutes);
 
-// Catch-all: serve index.html for SPA client-side routing
-app.get('*', (req, res) => {
+// Catch-all: serve index.html for SPA client-side routing (Express 5 compatible)
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
