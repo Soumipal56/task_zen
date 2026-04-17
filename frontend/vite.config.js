@@ -8,10 +8,9 @@ export default defineConfig({
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'redux-vendor': ['@reduxjs/toolkit', 'react-redux'],
-          'motion-vendor': ['framer-motion'],
+        // ✅ Vite 8 — function form
+        manualChunks: (id) => {
+          if (id.includes('node_modules/react')) return 'react-vendor';
         }
       }
     }
