@@ -39,22 +39,18 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
 
-// Serve frontend build in production
-if (NODE_ENV === 'production') {
-  const frontendDist = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(frontendDist));
-}
+// Serve frontend build (always, not just in production)
+const frontendDist = path.join(__dirname, '../frontend/dist');
+app.use(express.static(frontendDist));
 
 // API Routes
 app.use('/auth', authRoutes);
 app.use('/tasks', taskRoutes);
 
-// Catch-all: serve index.html for SPA client-side routing (production only)
-if (NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-  });
-}
+// Catch-all: serve index.html for SPA client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 // Error Handling
 app.use(errorHandler);
