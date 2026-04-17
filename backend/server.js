@@ -18,22 +18,31 @@ const app = express();
 // Connect to Database
 connectDB();
 
-// Allowed origins
+// Allowed origins — local dev + production Render URL + any extra via env
 const allowedOrigins = [
   'http://localhost:5173',
-  process.env.CLIENT_URL
+  'http://localhost:3000',
+  'https://task-zen-epc6.onrender.com',
+  process.env.CLIENT_URL,
 ].filter(Boolean);
+
+console.log('CORS allowed origins:', allowedOrigins);
 
 // Middlewares
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Allow requests with no origin (same-origin, curl, Postman, mobile apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.warn(`CORS blocked: ${origin}`);
+      callback(new Error(`CORS: origin ${origin} not allowed`));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(express.json());
 app.use(cookieParser());
