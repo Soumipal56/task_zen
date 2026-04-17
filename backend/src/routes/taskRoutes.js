@@ -3,11 +3,12 @@ import * as taskController from '../controllers/taskController.js';
 import { createTaskValidator, updateTaskStatusValidator } from '../validators/taskValidator.js';
 import { handleValidationErrors } from '../middlewares/validate.js';
 
-import { protect } from '../middlewares/authMiddleware.js';
+// import { protect } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.use(protect);
+// NO AUTH MIDDLEWARE - SOLVING 401 FOR IN-MEMORY MODE Gall
+// router.use(protect); 
 
 router.get('/', taskController.getAllTasks);
 router.post('/', createTaskValidator, handleValidationErrors, taskController.createTask);

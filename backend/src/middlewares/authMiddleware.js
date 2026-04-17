@@ -5,6 +5,10 @@ import User from '../models/User.js';
 export const protect = async (req, res, next) => {
   let token;
 
+  console.log('--- Auth Debugging ---');
+  console.log('Cookies:', req.cookies);
+  console.log('Auth header:', req.headers.authorization);
+
   // 1. Check for token in cookies (browser-based auth)
   if (req.cookies && req.cookies.token) {
     token = req.cookies.token;
@@ -18,6 +22,7 @@ export const protect = async (req, res, next) => {
   }
 
   if (!token) {
+    console.log('No token found');
     return res.status(401).json({ error: 'Not authorized, no token' });
   }
 

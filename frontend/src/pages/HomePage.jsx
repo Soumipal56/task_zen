@@ -157,7 +157,7 @@ const HomePage = () => {
 
         {/* Workspace Display */}
         <section className="w-full h-full" style={{ maxWidth: '1100px', paddingBottom: '5rem' }}>
-          <KanbanBoard hideActions={activeTab !== 'view'} />
+          <KanbanBoard activeTab={activeTab} />
         </section>
       </main>
     </div>

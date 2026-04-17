@@ -23,6 +23,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie('token', token, options)
     .json({
       success: true,
+      token, // Include token in JSON body
       user: { id: user.id, username: user.username, email: user.email }
     });
 };

@@ -4,7 +4,7 @@ import { fetchTasks, updateTask, deleteTask } from '../state/tasksSlice';
 import TaskCard from './TaskCard';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const KanbanBoard = ({ hideActions }) => {
+const KanbanBoard = ({ activeTab }) => {
   const dispatch = useDispatch();
   const { tasks, loading } = useSelector((state) => state.tasks);
 
@@ -58,7 +58,7 @@ const KanbanBoard = ({ hideActions }) => {
                     task={task}
                     onToggle={handleToggleTask}
                     onDelete={handleDeleteTask}
-                    hideActions={hideActions}
+                    activeTab={activeTab}
                   />
                 ))}
             </AnimatePresence>

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Trash2, CheckCircle, RotateCcw, Box, Activity } from 'lucide-react';
 
-const TaskCard = ({ task, onToggle, onDelete, hideActions }) => {
+const TaskCard = ({ task, onToggle, onDelete, activeTab }) => {
   // Mapping priority based on string ID hash
   const idHash = task.id.toString().split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const priority = task.priority || (idHash % 3 === 0 ? 'High' : idHash % 2 === 0 ? 'Medium' : 'Low');
@@ -30,8 +30,8 @@ const TaskCard = ({ task, onToggle, onDelete, hideActions }) => {
           </span>
         </div>
         
-        {!hideActions && (
-          <div className="flex gap-2 group-actions">
+        <div className="flex gap-2 group-actions">
+          {activeTab === 'move' && (
             <button
               onClick={() => onToggle(task.id, task.status)}
               style={{ padding: '0.4rem', background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-color)', borderRadius: '6px', color: 'var(--primary-color)', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -39,6 +39,8 @@ const TaskCard = ({ task, onToggle, onDelete, hideActions }) => {
             >
               {task.status === 'todo' ? <CheckCircle size={14} /> : <RotateCcw size={14} />}
             </button>
+          )}
+          {activeTab === 'delete' && (
             <button
               onClick={() => onDelete(task.id)}
               style={{ padding: '0.4rem', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.1)', borderRadius: '6px', color: '#ef4444', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -46,8 +48,8 @@ const TaskCard = ({ task, onToggle, onDelete, hideActions }) => {
             >
               <Trash2 size={14} />
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-4" style={{ marginBottom: '1.5rem' }}>

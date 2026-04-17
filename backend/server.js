@@ -7,16 +7,15 @@ import { fileURLToPath } from 'url';
 import { PORT, NODE_ENV } from './src/config/index.js';
 import taskRoutes from './src/routes/taskRoutes.js';
 import authRoutes from './src/routes/authRoutes.js';
-import connectDB from './src/config/db.js';
 import { errorHandler } from './src/middlewares/error.js';
+// import connectDB from './src/config/db.js'; // REMOVED FOR IN-MEMORY MODE Gall
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Connect to Database
-connectDB();
+// Database connection removed for purely in-memory operational mode Gall
 
 // Allowed origins — local dev + production Render URL + any extra via env
 const allowedOrigins = [
